@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
     Context context;
 
+    Fragment fragment = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void selectItem(int position) {
 
-        Fragment fragment = null;
+
 
         switch (position) {
             case 0:
@@ -162,6 +164,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
+        Fragment homeFragment = new HomeFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        if(!(fragment.getClass().toString().equals(homeFragment.getTag()))) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -169,13 +180,7 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         }
 
-        Fragment fragment = new HomeFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-        if(!(fragment instanceof HomeFragment)) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        }
+
     }
 
 }
