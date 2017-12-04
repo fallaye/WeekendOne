@@ -1,6 +1,7 @@
 package mobileappscompany.navigationdrawer;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -153,8 +154,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.back, Toast.LENGTH_LONG).show();
                 return (true);
             case R.id.about:
-                Toast.makeText(this, R.string.about_toast, Toast.LENGTH_LONG).show();
-                return (true);
+                Intent intent = new Intent(this, WebViewActivity.class);
+                startActivity(intent);
+                //Toast.makeText(this, R.string.about_toast, Toast.LENGTH_LONG).show();
+                //return (true);
             case R.id.exit:
                 finish();
                 return (true);
@@ -169,6 +172,11 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         if(!(fragment.getClass().toString().equals(homeFragment.getTag()))) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+
+        if(!this.getClass().toString().equals(MainActivity.class.toString())) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
